@@ -15,12 +15,25 @@ function todoadd() {
         li.appendChild(span)
     }
     todoinput.value = "";
+    savedata()
 }
 addtodo.addEventListener("click", todoadd)
 todolist.addEventListener("click", function removetodo(e) {
     if (e.target.tagName === 'SPAN') {
         e.target.parentElement.remove()
+        savedata()
     } else if (e.target.tagName === "LI") {
         e.target.style.textDecoration = "line-through"
+        savedata()
     }
 })
+function savedata() {
+    localStorage.setItem("data", todolist.innerHTML);
+}
+function showtask() {
+   const storeddata =  localStorage.getItem("data");
+    if (storeddata) {
+        todolist.innerHTML = storeddata;
+    }
+}
+showtask();
